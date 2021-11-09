@@ -5,14 +5,14 @@ import { NotificationService } from './notification.service';
 export class NotificationController {
   constructor(private readonly notificationService: NotificationService) {}
 
-  @Post()
+  @Post('/send')
   sendNotification(
     @Body() sendNotificationDto: Partial<Notification>,
   ): Promise<Notification> {
     return this.notificationService.sendNotification(sendNotificationDto);
   }
 
-  @Get()
+  @Get('/getUI')
   getUINotification(): Promise<Notification[]> {
     return this.notificationService.getUINotificationList();
   }
