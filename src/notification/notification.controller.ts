@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Notification } from './notification.schema';
 import { NotificationService } from './notification.service';
 
 @Controller()
@@ -12,8 +13,8 @@ export class NotificationController {
     return this.notificationService.sendNotification(sendNotificationDto);
   }
 
-  @Get('/getUI')
-  getUINotification(): Promise<Notification[]> {
-    return this.notificationService.getUINotificationList();
+  @Get('/ui/:userId')
+  getUINotification(@Param('userId') userId: string): Promise<Notification[]> {
+    return this.notificationService.getUINotificationList(userId);
   }
 }

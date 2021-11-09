@@ -1,13 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export type NotificationDocument = Notification & Document;
 
-export enum NotificationType {
-  LEAVE_BALANCE_REMINDER = 'leave-balance-reminder',
-  MONTHLY_PAYSLIP = 'monthly-payslip',
-  HAPPY_BIRTHDAY = 'happy-birthday',
+@Schema()
+export class NotificationType {
+  name: string;
+
+  channels: string[];
 }
+
+export const NotificationTypeSchema =
+  SchemaFactory.createForClass(NotificationType);
 
 @Schema()
 export class Notification {
@@ -15,7 +19,7 @@ export class Notification {
 
   userId: string;
 
-  @Prop({ type: String, required: true, enum: Object.keys(NotificationType) })
+  @Prop({ type: NotificationType, required: true })
   type: NotificationType;
 
   @Prop({ type: Object })
